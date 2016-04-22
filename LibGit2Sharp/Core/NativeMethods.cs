@@ -13,7 +13,7 @@ namespace LibGit2Sharp.Core
     internal static class NativeMethods
     {
         public const uint GIT_PATH_MAX = 4096;
-        private const string libgit2 = NativeDllName.Name;
+        private const string libgit2 = "libgit2-ios";
         // This is here to keep the pointer alive
         #pragma warning disable 0414
         private static readonly LibraryLifetimeObject lifetimeObject;
@@ -1836,5 +1836,10 @@ namespace LibGit2Sharp.Core
         [DllImport(libgit2)]
         internal static extern void git_transaction_free(IntPtr txn);
     }
+
+	class UniqueId
+	{
+		public const string UniqueIdentifier = "libgitonios";
+	}
 }
 // ReSharper restore InconsistentNaming
