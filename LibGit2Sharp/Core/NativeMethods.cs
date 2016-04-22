@@ -1591,7 +1591,7 @@ namespace LibGit2Sharp.Core
         internal static extern unsafe int git_submodule_lookup(
             out git_submodule* reference,
             git_repository* repo,
-            [MarshalAs(UnmanagedType.CustomMarshaler, MarshalCookie = UniqueId.UniqueIdentifier, MarshalTypeRef = typeof(StrictUtf8Marshaler))] FilePath name);
+            [MarshalAs(UnmanagedType.CustomMarshaler, MarshalCookie = UniqueId.UniqueIdentifier, MarshalTypeRef = typeof(StrictUtf8Marshaler))] string name);
 
         [DllImport(libgit2)]
         internal static extern unsafe int git_submodule_resolve_url(

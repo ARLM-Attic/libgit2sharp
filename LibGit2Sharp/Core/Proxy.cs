@@ -2838,7 +2838,7 @@ namespace LibGit2Sharp.Core
         /// Returns a handle to the corresponding submodule,
         /// or an invalid handle if a submodule is not found.
         /// </summary>
-        public static unsafe SubmoduleHandle git_submodule_lookup(RepositoryHandle repo, FilePath name)
+        public static unsafe SubmoduleHandle git_submodule_lookup(RepositoryHandle repo, string name)
         {
             git_submodule* submodule;
             var res = NativeMethods.git_submodule_lookup(out submodule, repo, name);
