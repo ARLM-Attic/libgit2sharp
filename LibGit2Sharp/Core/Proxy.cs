@@ -115,20 +115,20 @@ namespace LibGit2Sharp.Core
 
         #region git_blob_
 
-        public static unsafe IntPtr git_blob_create_fromstream(RepositoryHandle repo, FilePath hintpath)
-        {
-            IntPtr writestream_ptr;
+        //public static unsafe IntPtr git_blob_create_fromstream(RepositoryHandle repo, FilePath hintpath)
+        //{
+        //    IntPtr writestream_ptr;
 
-            Ensure.ZeroResult(NativeMethods.git_blob_create_fromstream(out writestream_ptr, repo, hintpath));
-            return writestream_ptr;
-        }
+        //    Ensure.ZeroResult(NativeMethods.git_blob_create_fromstream(out writestream_ptr, repo, hintpath));
+        //    return writestream_ptr;
+        //}
 
-        public static unsafe ObjectId git_blob_create_fromstream_commit(IntPtr writestream_ptr)
-        {
-            var oid = new GitOid();
-            Ensure.ZeroResult(NativeMethods.git_blob_create_fromstream_commit(ref oid, writestream_ptr));
-            return oid;
-        }
+        //public static unsafe ObjectId git_blob_create_fromstream_commit(IntPtr writestream_ptr)
+        //{
+        //    var oid = new GitOid();
+        //    Ensure.ZeroResult(NativeMethods.git_blob_create_fromstream_commit(ref oid, writestream_ptr));
+        //    return oid;
+        //}
 
         public static unsafe ObjectId git_blob_create_fromdisk(RepositoryHandle repo, FilePath path)
         {

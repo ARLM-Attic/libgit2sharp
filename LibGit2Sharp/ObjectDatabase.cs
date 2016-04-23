@@ -183,10 +183,10 @@ namespace LibGit2Sharp
         /// </summary>
         /// <param name="stream">The stream from which will be read the content of the blob to be created.</param>
         /// <returns>The created <see cref="Blob"/>.</returns>
-        public virtual Blob CreateBlob(Stream stream)
-        {
-            return CreateBlob(stream, null, null);
-        }
+        //public virtual Blob CreateBlob(Stream stream)
+        //{
+        //    return CreateBlob(stream, null, null);
+        //}
 
         /// <summary>
         /// Inserts a <see cref="Blob"/> into the object database, created from the content of a stream.
@@ -195,10 +195,10 @@ namespace LibGit2Sharp
         /// <param name="stream">The stream from which will be read the content of the blob to be created.</param>
         /// <param name="hintpath">The hintpath is used to determine what git filters should be applied to the object before it can be placed to the object database.</param>
         /// <returns>The created <see cref="Blob"/>.</returns>
-        public virtual Blob CreateBlob(Stream stream, string hintpath)
-        {
-            return CreateBlob(stream, hintpath, null);
-        }
+        //public virtual Blob CreateBlob(Stream stream, string hintpath)
+        //{
+        //    return CreateBlob(stream, hintpath, null);
+        //}
 
         /// <summary>
         /// Inserts a <see cref="Blob"/> into the object database, created from the content of a stream.
@@ -208,73 +208,73 @@ namespace LibGit2Sharp
         /// <param name="hintpath">The hintpath is used to determine what git filters should be applied to the object before it can be placed to the object database.</param>
         /// <param name="numberOfBytesToConsume">The number of bytes to consume from the stream.</param>
         /// <returns>The created <see cref="Blob"/>.</returns>
-        public virtual Blob CreateBlob(Stream stream, string hintpath, long numberOfBytesToConsume)
-        {
-            return CreateBlob(stream, hintpath, (long?)numberOfBytesToConsume);
-        }
+        //public virtual Blob CreateBlob(Stream stream, string hintpath, long numberOfBytesToConsume)
+        //{
+        //    return CreateBlob(stream, hintpath, (long?)numberOfBytesToConsume);
+        //}
 
-        private unsafe Blob CreateBlob(Stream stream, string hintpath, long? numberOfBytesToConsume)
-        {
-            Ensure.ArgumentNotNull(stream, "stream");
+        //private unsafe Blob CreateBlob(Stream stream, string hintpath, long? numberOfBytesToConsume)
+        //{
+        //    Ensure.ArgumentNotNull(stream, "stream");
 
-            // there's no need to buffer the file for filtering, so simply use a stream
-            if (hintpath == null && numberOfBytesToConsume.HasValue)
-            {
-                return CreateBlob(stream, numberOfBytesToConsume.Value);
-            }
+        //    // there's no need to buffer the file for filtering, so simply use a stream
+        //    if (hintpath == null && numberOfBytesToConsume.HasValue)
+        //    {
+        //        return CreateBlob(stream, numberOfBytesToConsume.Value);
+        //    }
 
-            if (!stream.CanRead)
-            {
-                throw new ArgumentException("The stream cannot be read from.", "stream");
-            }
+        //    if (!stream.CanRead)
+        //    {
+        //        throw new ArgumentException("The stream cannot be read from.", "stream");
+        //    }
 
-            IntPtr writestream_ptr = Proxy.git_blob_create_fromstream(repo.Handle, hintpath);
-            GitWriteStream writestream = (GitWriteStream)Marshal.PtrToStructure(writestream_ptr, typeof(GitWriteStream));
+        //    IntPtr writestream_ptr = Proxy.git_blob_create_fromstream(repo.Handle, hintpath);
+        //    GitWriteStream writestream = (GitWriteStream)Marshal.PtrToStructure(writestream_ptr, typeof(GitWriteStream));
 
-            try
-            {
-                var buffer = new byte[4 * 1024];
-                long totalRead = 0;
-                int read = 0;
+        //    try
+        //    {
+        //        var buffer = new byte[4 * 1024];
+        //        long totalRead = 0;
+        //        int read = 0;
 
-                while (true)
-                {
-                    int toRead = numberOfBytesToConsume.HasValue ?
-                        (int)Math.Min(numberOfBytesToConsume.Value - totalRead, (long)buffer.Length) :
-                        buffer.Length;
+        //        while (true)
+        //        {
+        //            int toRead = numberOfBytesToConsume.HasValue ?
+        //                (int)Math.Min(numberOfBytesToConsume.Value - totalRead, (long)buffer.Length) :
+        //                buffer.Length;
 
-                    if (toRead > 0)
-                    {
-                        read = (toRead > 0) ? stream.Read(buffer, 0, toRead) : 0;
-                    }
+        //            if (toRead > 0)
+        //            {
+        //                read = (toRead > 0) ? stream.Read(buffer, 0, toRead) : 0;
+        //            }
 
-                    if (read == 0)
-                    {
-                        break;
-                    }
+        //            if (read == 0)
+        //            {
+        //                break;
+        //            }
 
-                    fixed (byte* buffer_ptr = buffer)
-                    {
-                        writestream.write(writestream_ptr, (IntPtr)buffer_ptr, (UIntPtr)read);
-                    }
+        //            fixed (byte* buffer_ptr = buffer)
+        //            {
+        //                writestream.write(writestream_ptr, (IntPtr)buffer_ptr, (UIntPtr)read);
+        //            }
 
-                    totalRead += read;
-                }
+        //            totalRead += read;
+        //        }
 
-                if (numberOfBytesToConsume.HasValue && totalRead < numberOfBytesToConsume.Value)
-                {
-                    throw new EndOfStreamException("The stream ended unexpectedly");
-                }
-            }
-            catch(Exception e)
-            {
-                writestream.free(writestream_ptr);
-                throw e;
-            }
+        //        if (numberOfBytesToConsume.HasValue && totalRead < numberOfBytesToConsume.Value)
+        //        {
+        //            throw new EndOfStreamException("The stream ended unexpectedly");
+        //        }
+        //    }
+        //    catch(Exception e)
+        //    {
+        //        writestream.free(writestream_ptr);
+        //        throw e;
+        //    }
 
-            ObjectId id = Proxy.git_blob_create_fromstream_commit(writestream_ptr);
-            return repo.Lookup<Blob>(id);
-        }
+        //    ObjectId id = Proxy.git_blob_create_fromstream_commit(writestream_ptr);
+        //    return repo.Lookup<Blob>(id);
+        //}
 
         /// <summary>
         /// Inserts a <see cref="Blob"/> into the object database created from the content of the stream.

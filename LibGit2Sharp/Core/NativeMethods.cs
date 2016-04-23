@@ -13,7 +13,7 @@ namespace LibGit2Sharp.Core
     internal static class NativeMethods
     {
         public const uint GIT_PATH_MAX = 4096;
-        private const string libgit2 = "libgit2-ios";
+        private const string libgit2 = "__Internal";
         // This is here to keep the pointer alive
         #pragma warning disable 0414
         private static readonly LibraryLifetimeObject lifetimeObject;
@@ -126,16 +126,16 @@ namespace LibGit2Sharp.Core
             int max_length,
             IntPtr data);
 
-        [DllImport(libgit2)]
-        internal static extern unsafe int git_blob_create_fromstream(
-            out IntPtr stream,
-            git_repository* repositoryPtr,
-            [MarshalAs(UnmanagedType.CustomMarshaler, MarshalCookie = UniqueId.UniqueIdentifier, MarshalTypeRef = typeof(StrictFilePathMarshaler))] FilePath hintpath);
+        //[DllImport(libgit2)]
+        //internal static extern unsafe int git_blob_create_fromstream(
+        //    out IntPtr stream,
+        //    git_repository* repositoryPtr,
+        //    [MarshalAs(UnmanagedType.CustomMarshaler, MarshalCookie = UniqueId.UniqueIdentifier, MarshalTypeRef = typeof(StrictFilePathMarshaler))] FilePath hintpath);
 
-        [DllImport(libgit2)]
-        internal static extern unsafe int git_blob_create_fromstream_commit(
-            ref GitOid oid,
-            IntPtr stream);
+        //[DllImport(libgit2)]
+        //internal static extern unsafe int git_blob_create_fromstream_commit(
+        //    ref GitOid oid,
+        //    IntPtr stream);
 
         [DllImport(libgit2)]
         internal static extern unsafe int git_blob_create_fromchunks(
